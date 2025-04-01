@@ -3,12 +3,13 @@ import bcrypt from "bcryptjs";
 import { queryDatabase } from "../database";
 import { generateAccessToken, generateRefreshToken } from "../utils";
 import { ERROR_MESSAGES, UserType } from "../../../../packages/shared";
+import { TABLES_NAMES } from "../constants";
 
 export const authService = {
   login: async (name: string, password: string) => {
     const foundUserData = await queryDatabase<UserType>({
       method: "get",
-      table: "users",
+      table: TABLES_NAMES.USERS,
       eq: ["name", name],
       limit: 1,
     });
@@ -17,10 +18,10 @@ export const authService = {
     if (error) throw new Error(error.message);
 
     const user = data.length ? data[0] : null;
+
     if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
-
     const accessToken = generateAccessToken(user.id!);
     const refreshToken = generateRefreshToken(user.id!);
 
@@ -52,7 +53,8 @@ export const authService = {
     }
     const foundUserData = await queryDatabase<UserType>({
       method: "get",
-      table: "users",
+      table: TABLES_NAMES.USERS,
+      select: "id, name, updatedAt, createdAt",
       eq: ["id", decoded.userId],
       limit: 1,
     });

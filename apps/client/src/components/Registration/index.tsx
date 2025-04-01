@@ -2,6 +2,7 @@ import { useState } from "react";
 import { axiosInstance } from "../../api";
 import { AxiosError } from "axios";
 import { UserType } from "../../../../../packages/shared";
+import { setAccessToken, setRefreshToken } from "../../utils";
 
 interface Props {
   onSuccess: (user: UserType) => void;
@@ -20,11 +21,11 @@ export const Registration = (props: Props) => {
     setError("");
     setSuccess("");
     try {
-      console.log({ name, password });
       const res = await axiosInstance.post("/users/create", { name, password });
-      console.log(res);
       onSuccess(res.data.user);
       setSuccess(res.data.message);
+      setAccessToken(res.data.accessToken);
+      setRefreshToken(res.data.refreshToken);
     } catch (error) {
       if (error instanceof AxiosError) {
         setError(error.response?.data?.message);

@@ -8,10 +8,18 @@ export const createUser = async (
 ): Promise<void> => {
   try {
     const { name, password } = req.body;
-    const userRes = await userService.createUser(name, password);
+    console.log(name, password);
+
+    await userService.createUser(name, password);
+    const { accessToken, refreshToken, user } = await authService.login(
+      name,
+      password
+    );
     res.status(201).json({
       message: SUCCESS_MESSAGES.USER_SUCCESSFULLY_RESTARTED,
-      user: userRes,
+      user,
+      refreshToken,
+      accessToken,
     });
   } catch (err: unknown) {
     if (err instanceof Error) {

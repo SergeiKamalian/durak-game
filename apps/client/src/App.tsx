@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { axiosInstance } from "./api";
-import { Registration, Login } from "./components";
+import { Registration, Login, Account } from "./components";
 import { UserType } from "../../../packages/shared";
 import { getAccessToken } from "./utils";
 
@@ -12,6 +12,7 @@ function App() {
     const getUser = async () => {
       try {
         const token = getAccessToken();
+
         if (token) {
           const res = await axiosInstance.post("/users/whoami");
           if (res.data) {
@@ -66,9 +67,10 @@ function App() {
 
   return (
     <div>
-      <h1>Hello {user.name}</h1>
-      <button onClick={console.log}>Get users</button>
-      <button onClick={console.log}>logout</button>
+      <h1>
+        Hello {user.name} {user.id}
+      </h1>
+      <Account user={user} onLogout={() => setUser(null)} />
     </div>
   );
 }
