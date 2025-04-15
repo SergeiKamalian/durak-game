@@ -24,7 +24,7 @@ export const useAppActions = () => {
 export const useAuthActions = () => {
   const dispatch = useDispatch();
 
-  const setUser = (user: UserType) => dispatch(changeUser(user));
+  const setUser = (user: UserType | null) => dispatch(changeUser(user));
 
   return { setUser };
 };

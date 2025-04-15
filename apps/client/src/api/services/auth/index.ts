@@ -17,4 +17,7 @@ export const AuthService = new (class {
   async loginUser(data: LoginUserBody): Promise<LoginUserResponse> {
     return axiosInstance.post("/users/login", data).then((res) => res.data);
   }
+  async logout(): Promise<null> {
+    return axiosInstance.post("/users/logout").then((res) => res.data);
+  }
 })();

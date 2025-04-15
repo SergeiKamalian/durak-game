@@ -21,8 +21,8 @@ const router = express.Router();
 router.post("/create", createUser);
 router.post("/login", loginUser);
 router.post("/refresh", refreshToken);
-
 router.post("/logout", logoutUser);
+
 router.post("/whoami", authenticateToken, whoami);
 router.post("/friend-request", authenticateToken, sendFriendRequest);
 router.get("/friends", authenticateToken, fetchFriendsInfo);

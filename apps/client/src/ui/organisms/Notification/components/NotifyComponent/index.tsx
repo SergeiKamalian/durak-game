@@ -7,7 +7,7 @@ export const NotifyComponent = memo((props: NotifyProps) => {
   const { message } = props;
   return (
     <StyledNotificationWrapper>
-      <StyledImage alt="Logo" src="../../../../../../public/logo.png" />
+      <StyledImage alt="Logo" src="../../../../../../logo.png" />
       <StyledLines />
       <Text align="center" fz={18} fw={600} color="#b3a582">
         {message}

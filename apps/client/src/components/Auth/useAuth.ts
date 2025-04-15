@@ -8,6 +8,7 @@ import { useTheme } from "styled-components";
 import { setAccessToken, setRefreshToken } from "../../utils";
 import { useAppActions, useAuthActions } from "../../store";
 import { Notify } from "../../ui";
+import { handleError } from "../../handlers";
 
 export const useAuth = () => {
   const { setUser } = useAuthActions();
@@ -35,12 +36,10 @@ export const useAuth = () => {
         setRefreshToken(res.refreshToken);
         setUser(res.user);
         Notify({
-          message: isAuthorization
-            ? `You’re now logged in`
-            : `Your account has been created`,
+          message: res.message,
         });
       } catch (error) {
-        console.error(error);
+        handleError(error);
       } finally {
         setAppLoadingStatus(false);
       }

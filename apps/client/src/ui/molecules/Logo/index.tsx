@@ -19,7 +19,7 @@ export const Logo = memo((props: LogoProps) => {
           alt="logo"
           height="70px"
           width="auto"
-          url={"../../../../public/logo.png"}
+          url={"../../../../logo.png"}
         />
         <Wrapper padding="0" direction="column" justifyContent="center">
           <Text fw={700} fz={30} lh={25}>

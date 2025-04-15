@@ -38,7 +38,7 @@ export const Notify = (props: NotifyProps) => {
     position: "top-center",
     autoClose: 2000,
     closeOnClick: true,
-    pauseOnHover: false,
+    pauseOnHover: true,
     draggable: false,
     progress: undefined,
     transition: Flip,

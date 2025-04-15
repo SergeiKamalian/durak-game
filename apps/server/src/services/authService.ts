@@ -2,7 +2,11 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { queryDatabase } from "../database";
 import { generateAccessToken, generateRefreshToken } from "../utils";
-import { ERROR_MESSAGES, UserType } from "../../../../packages/shared";
+import {
+  ERROR_MESSAGES,
+  MESSAGES,
+  UserType,
+} from "../../../../packages/shared";
 import { TABLES_NAMES } from "../constants";
 import { UserModel } from "../database/model";
 
@@ -10,11 +14,11 @@ export const authService = {
   login: async (name: string, password: string) => {
     const user = await UserModel.findOne({ name });
     if (!user) {
-      throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
+      throw new Error(MESSAGES.LOGIN.INVALID_CREDENTIALS);
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
+      throw new Error(MESSAGES.LOGIN.INVALID_CREDENTIALS);
     }
     const accessToken = generateAccessToken(String(user._id));
     const refreshToken = generateRefreshToken(String(user._id));
