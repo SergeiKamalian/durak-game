@@ -4,28 +4,26 @@ import { queryDatabase } from "../database";
 import { generateAccessToken, generateRefreshToken } from "../utils";
 import { ERROR_MESSAGES, UserType } from "../../../../packages/shared";
 import { TABLES_NAMES } from "../constants";
+import { UserModel } from "../database/model";
 
 export const authService = {
   login: async (name: string, password: string) => {
-    const foundUserData = await queryDatabase<UserType>({
-      method: "get",
-      table: TABLES_NAMES.USERS,
-      eq: ["name", name],
-      limit: 1,
-    });
-
-    const { data, error } = foundUserData!;
-    if (error) throw new Error(error.message);
-
-    const user = data.length ? data[0] : null;
-
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    const user = await UserModel.findOne({ name });
+    if (!user) {
       throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
     }
-    const accessToken = generateAccessToken(user.id!);
-    const refreshToken = generateRefreshToken(user.id!);
-
-    return { accessToken, refreshToken, user };
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error(ERROR_MESSAGES.INVALID_CREDENTIALS);
+    }
+    const accessToken = generateAccessToken(String(user._id));
+    const refreshToken = generateRefreshToken(String(user._id));
+    const createdUser = await UserModel.findOne({ name }).select([
+      "name",
+      "createdAt",
+      "updatedAt",
+    ]);
+    return { accessToken, refreshToken, user: createdUser };
   },
 
   refreshToken: (token: string) => {
@@ -51,17 +49,11 @@ export const authService = {
     if (!decoded || !decoded.userId) {
       throw new Error(ERROR_MESSAGES.ACCESS_TOKEN_INVALID);
     }
-    const foundUserData = await queryDatabase<UserType>({
-      method: "get",
-      table: TABLES_NAMES.USERS,
-      select: "id, name, updatedAt, createdAt",
-      eq: ["id", decoded.userId],
-      limit: 1,
-    });
-    const { data, error } = foundUserData!;
-    if (error) throw new Error(error.message);
-
-    const user = data.length ? data[0] : null;
+    const user = await UserModel.findOne({ _id: decoded.userId }).select([
+      "name",
+      "createdAt",
+      "updatedAt",
+    ]);
     if (!user) {
       throw new Error(ERROR_MESSAGES.USER_NOT_FOUND);
     }

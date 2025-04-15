@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { userService, authService } from "../services";
-import { SUCCESS_MESSAGES } from "../../../../packages/shared";
+import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../../../../packages/shared";
+import { UserModel } from "../database/model";
 
 export const createUser = async (
   req: Request,
@@ -8,8 +9,11 @@ export const createUser = async (
 ): Promise<void> => {
   try {
     const { name, password } = req.body;
-    console.log(name, password);
-
+    const existingUser = await UserModel.findOne({ name });
+    if (existingUser) {
+      res.status(409).json({ message: ERROR_MESSAGES.COLUMN_CONFLICT });
+      return;
+    }
     await userService.createUser(name, password);
     const { accessToken, refreshToken, user } = await authService.login(
       name,

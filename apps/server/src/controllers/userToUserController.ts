@@ -10,12 +10,12 @@ export const fetchFriendsInfo = async (
     const authHeader = req.headers.authorization;
     const token = authHeader?.split(" ")[1];
     const currentUser = await authService.whoami(token);
-    if (!currentUser.id) {
-      res.status(401).json({ message: ERROR_MESSAGES.UNAUTHORIZED });
-      return;
-    }
-    const friendsRes = await friendService.fetchFriends(currentUser.id);
-    res.status(201).json(friendsRes);
+    // if (!currentUser.id) {
+    //   res.status(401).json({ message: ERROR_MESSAGES.UNAUTHORIZED });
+    //   return;
+    // }
+    // const friendsRes = await friendService.fetchFriends(currentUser.id);
+    // res.status(201).json(friendsRes);
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(409).json({ message: err.message });
@@ -40,14 +40,14 @@ export const sendFriendRequest = async (
     const authHeader = req.headers.authorization;
     const token = authHeader?.split(" ")[1];
     const currentUser = await authService.whoami(token);
-    if (!currentUser.id) {
-      res.status(401).json({ message: ERROR_MESSAGES.UNAUTHORIZED });
-      return;
-    }
-    await friendService.sendFriendRequest(currentUser.id, userId);
-    res.status(201).json({
-      message: SUCCESS_MESSAGES.FRIEND_REQUEST_SUCCESSFULLY_SENDED,
-    });
+    // if (!currentUser.id) {
+    //   res.status(401).json({ message: ERROR_MESSAGES.UNAUTHORIZED });
+    //   return;
+    // }
+    // await friendService.sendFriendRequest(currentUser.id, userId);
+    // res.status(201).json({
+    //   message: SUCCESS_MESSAGES.FRIEND_REQUEST_SUCCESSFULLY_SENDED,
+    // });
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(409).json({ message: err.message });
@@ -70,15 +70,15 @@ export const handleFriendRequest = async (
     const authHeader = req.headers.authorization;
     const token = authHeader?.split(" ")[1];
     const currentUser = await authService.whoami(token);
-    if (!currentUser.id) {
-      res.status(401).json({ message: ERROR_MESSAGES.UNAUTHORIZED });
-      return;
-    }
-    await friendService.handleFriendRequest(
-      currentUser.id,
-      requestedUserId,
-      action
-    );
+    // if (!currentUser.id) {
+    //   res.status(401).json({ message: ERROR_MESSAGES.UNAUTHORIZED });
+    //   return;
+    // }
+    // await friendService.handleFriendRequest(
+    //   currentUser.id,
+    //   requestedUserId,
+    //   action
+    // );
 
     res.status(201).json({
       message: SUCCESS_MESSAGES.FRIEND_REQUEST_SUCCESSFULLY_SENDED,
