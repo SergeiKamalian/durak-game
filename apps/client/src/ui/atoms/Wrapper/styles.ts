@@ -8,6 +8,7 @@ interface WrapperProps {
   $gap: number;
   $minHeight?: string;
   $minWidth?: string;
+  $maxHeight?: string;
   $borderRadius: string;
   $withBoxShadow: boolean;
   $alignItems: string;
@@ -15,6 +16,7 @@ interface WrapperProps {
   $position: string;
   $blur: string;
   $border: string;
+  $overflow?: string;
 }
 
 export const StyledWrapper = styled(motion.div)<WrapperProps>`
@@ -32,5 +34,7 @@ export const StyledWrapper = styled(motion.div)<WrapperProps>`
   justify-content: ${(p) => p.$justifyContent};
   min-width: ${(p) => p.$minWidth || "auto"};
   min-height: ${(p) => p.$minHeight || "auto"};
+  max-height: ${(p) => p.$maxHeight || "auto"};
   width: fit-content;
+  overflow: ${(p) => p.$overflow || "auto"};
 `;

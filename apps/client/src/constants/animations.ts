@@ -1,11 +1,13 @@
 export const wrapperAnimation = {
   hidden: {
-    y: "-100vH",
-    x: "10px",
+    y: "-30px",
+    x: "0px",
+    opacity: 0,
   },
   visible: {
     y: "0px",
     x: "0px",
+    opacity: 1,
     transition: {
       duration: 0.1,
       type: "spring",

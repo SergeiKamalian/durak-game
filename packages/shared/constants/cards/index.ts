@@ -1,0 +1,48 @@
+export const CARD_SUITS = {
+  HEARTS: "hearts",
+  DIAMONDS: "diamonds",
+  CLUBS: "clubs",
+  SPADES: "spades",
+};
+
+export const ALL_CARDS = [
+  { id: 0, suit: CARD_SUITS.HEARTS, rank: "6", value: 6 },
+  { id: 1, suit: CARD_SUITS.HEARTS, rank: "7", value: 7 },
+  { id: 2, suit: CARD_SUITS.HEARTS, rank: "8", value: 8 },
+  { id: 3, suit: CARD_SUITS.HEARTS, rank: "9", value: 9 },
+  { id: 4, suit: CARD_SUITS.HEARTS, rank: "10", value: 10 },
+  { id: 5, suit: CARD_SUITS.HEARTS, rank: "J", value: 11 },
+  { id: 6, suit: CARD_SUITS.HEARTS, rank: "Q", value: 12 },
+  { id: 7, suit: CARD_SUITS.HEARTS, rank: "K", value: 13 },
+  { id: 8, suit: CARD_SUITS.HEARTS, rank: "A", value: 14 },
+
+  { id: 9, suit: CARD_SUITS.DIAMONDS, rank: "6", value: 6 },
+  { id: 10, suit: CARD_SUITS.DIAMONDS, rank: "7", value: 7 },
+  { id: 11, suit: CARD_SUITS.DIAMONDS, rank: "8", value: 8 },
+  { id: 12, suit: CARD_SUITS.DIAMONDS, rank: "9", value: 9 },
+  { id: 13, suit: CARD_SUITS.DIAMONDS, rank: "10", value: 10 },
+  { id: 14, suit: CARD_SUITS.DIAMONDS, rank: "J", value: 11 },
+  { id: 15, suit: CARD_SUITS.DIAMONDS, rank: "Q", value: 12 },
+  { id: 16, suit: CARD_SUITS.DIAMONDS, rank: "K", value: 13 },
+  { id: 17, suit: CARD_SUITS.DIAMONDS, rank: "A", value: 14 },
+
+  { id: 18, suit: CARD_SUITS.CLUBS, rank: "6", value: 6 },
+  { id: 19, suit: CARD_SUITS.CLUBS, rank: "7", value: 7 },
+  { id: 20, suit: CARD_SUITS.CLUBS, rank: "8", value: 8 },
+  { id: 21, suit: CARD_SUITS.CLUBS, rank: "9", value: 9 },
+  { id: 22, suit: CARD_SUITS.CLUBS, rank: "10", value: 10 },
+  { id: 23, suit: CARD_SUITS.CLUBS, rank: "J", value: 11 },
+  { id: 24, suit: CARD_SUITS.CLUBS, rank: "Q", value: 12 },
+  { id: 25, suit: CARD_SUITS.CLUBS, rank: "K", value: 13 },
+  { id: 26, suit: CARD_SUITS.CLUBS, rank: "A", value: 14 },
+
+  { id: 27, suit: CARD_SUITS.SPADES, rank: "6", value: 6 },
+  { id: 28, suit: CARD_SUITS.SPADES, rank: "7", value: 7 },
+  { id: 29, suit: CARD_SUITS.SPADES, rank: "8", value: 8 },
+  { id: 30, suit: CARD_SUITS.SPADES, rank: "9", value: 9 },
+  { id: 31, suit: CARD_SUITS.SPADES, rank: "10", value: 10 },
+  { id: 32, suit: CARD_SUITS.SPADES, rank: "J", value: 11 },
+  { id: 33, suit: CARD_SUITS.SPADES, rank: "Q", value: 12 },
+  { id: 34, suit: CARD_SUITS.SPADES, rank: "K", value: 13 },
+  { id: 35, suit: CARD_SUITS.SPADES, rank: "A", value: 14 },
+];

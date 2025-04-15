@@ -10,6 +10,7 @@ interface WrapperProps {
   gap?: number;
   minWidth?: string;
   minHeight?: string;
+  maxHeight?: string;
   children: ReactNode;
   borderRadius?: string;
   withBoxShadow?: boolean;
@@ -19,6 +20,7 @@ interface WrapperProps {
   blur?: string;
   border?: string;
   withAnimation?: boolean;
+  overflow?: "hidden";
 }
 
 export const Wrapper: FC<WrapperProps> = memo((props) => {
@@ -29,6 +31,7 @@ export const Wrapper: FC<WrapperProps> = memo((props) => {
     gap = 5,
     minHeight,
     minWidth,
+    maxHeight,
     children,
     borderRadius,
     withBoxShadow = false,
@@ -38,7 +41,9 @@ export const Wrapper: FC<WrapperProps> = memo((props) => {
     blur = "",
     border = "",
     withAnimation = false,
+    overflow,
   } = props;
+  console.log(maxHeight);
 
   if (!withAnimation)
     return (
@@ -49,6 +54,7 @@ export const Wrapper: FC<WrapperProps> = memo((props) => {
         $gap={gap}
         $minHeight={minHeight}
         $minWidth={minWidth}
+        $maxHeight={maxHeight}
         $borderRadius={borderRadius || "none"}
         $withBoxShadow={withBoxShadow}
         $alignItems={alignItems}
@@ -56,6 +62,7 @@ export const Wrapper: FC<WrapperProps> = memo((props) => {
         $position={position}
         $blur={blur}
         $border={border}
+        $overflow={overflow}
       >
         {children}
       </StyledWrapper>
