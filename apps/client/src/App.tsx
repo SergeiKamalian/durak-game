@@ -1,30 +1,43 @@
-import { useEffect, useState } from "react";
-import { axiosInstance } from "./api";
-import { Registration, Login, Account } from "./components";
-import { UserType } from "../../../packages/shared";
-import { getAccessToken } from "./utils";
+import { Auth } from "./components";
+import { useAppInitialization } from "./hooks";
+import { AppProvider } from "./providers";
+import { useAuthSelector } from "./store";
 
 function App() {
-  const [user, setUser] = useState<UserType | null>(null);
-  const [isReg, setIsReg] = useState(true);
+  useAppInitialization();
+  const { isAuth } = useAuthSelector();
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const token = getAccessToken();
+  return (
+    <AppProvider>
+      {!isAuth ? (
+        <Auth />
+      ) : (
+        <div>
+          asd <img src="image.jpeg" alt="" />
+        </div>
+      )}
+    </AppProvider>
+  );
+  // const [user, setUser] = useState<UserType | null>(null);
+  // const [isReg, setIsReg] = useState(true);
 
-        if (token) {
-          const res = await axiosInstance.post("/users/whoami");
-          if (res.data) {
-            setUser(res.data);
-          }
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const token = getAccessToken();
+
+  //       if (token) {
+  //         const res = await axiosInstance.post("/users/whoami");
+  //         if (res.data) {
+  //           setUser(res.data);
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
 
   // const getUsers = async () => {
   //   try {
@@ -48,31 +61,31 @@ function App() {
   //   }
   // };
 
-  if (!user)
-    return (
-      <div>
-        {isReg ? (
-          <Registration onSuccess={setUser} />
-        ) : (
-          <Login onSuccess={setUser} />
-        )}
-        <p>
-          {isReg ? "have account" : "dont have account"}{" "}
-          <button onClick={() => setIsReg((prev) => !prev)}>
-            {isReg ? "login" : "registration"}
-          </button>
-        </p>
-      </div>
-    );
+  // if (!user)
+  //   return (
+  //     <div>
+  //       {isReg ? (
+  //         <Registration onSuccess={setUser} />
+  //       ) : (
+  //         <Login onSuccess={setUser} />
+  //       )}
+  //       <p>
+  //         {isReg ? "have account" : "dont have account"}{" "}
+  //         <button onClick={() => setIsReg((prev) => !prev)}>
+  //           {isReg ? "login" : "registration"}
+  //         </button>
+  //       </p>
+  //     </div>
+  //   );
 
-  return (
-    <div>
-      <h1>
-        Hello {user.name} {user.id}
-      </h1>
-      <Account user={user} onLogout={() => setUser(null)} />
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <h1>
+  //       Hello {user.name} {user.id}
+  //     </h1>
+  //     <Account user={user} onLogout={() => setUser(null)} />
+  //   </div>
+  // );
 }
 
 export default App;

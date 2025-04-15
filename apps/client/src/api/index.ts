@@ -52,7 +52,7 @@ axiosInstance.interceptors.response.use(
         } catch (refreshError) {
           console.error("Error refreshing token:", refreshError);
           removeTokens();
-          window.location.href = "/login"; // Перенаправляем на страницу логина
+          window.location.href = "/login";
         }
       }
     }
@@ -61,3 +61,4 @@ axiosInstance.interceptors.response.use(
 );
 
 export { axiosInstance };
+export * from "./services";
