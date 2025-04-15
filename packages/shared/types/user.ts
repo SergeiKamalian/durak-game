@@ -9,12 +9,21 @@ export type CreateUserBody = {
   name: string;
   password: string;
 };
+
+export type CreateUserResponse = {
+  message: string;
+  accessToken: string;
+  refreshToken: string;
+  user: UserType;
+};
+
 export type LoginUserBody = CreateUserBody;
+export type LoginUserResponse = CreateUserResponse;
 
 export type UserType = {
-  id?: number;
+  _id?: number;
   name: string;
-  password: string;
+  password?: string;
   createdAt: Date;
   updatedAt: Date;
 };
