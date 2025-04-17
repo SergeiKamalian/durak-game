@@ -21,7 +21,7 @@ export type LoginUserBody = CreateUserBody;
 export type LoginUserResponse = CreateUserResponse;
 
 export type UserType = {
-  _id?: number;
+  _id: string;
   name: string;
   password?: string;
   createdAt: Date;

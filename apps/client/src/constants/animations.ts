@@ -9,19 +9,13 @@ export const wrapperAnimation = {
     x: "0px",
     opacity: 1,
     transition: {
-      duration: 0.1,
-      type: "spring",
-      damping: 25,
-      stiffness: 300,
+      duration: 0.6,
       delay: 0.1,
     },
   },
   exit: {
     y: "-100vH",
     x: "10px",
-    transition: {
-      duration: 0.3,
-    },
   },
 };
 

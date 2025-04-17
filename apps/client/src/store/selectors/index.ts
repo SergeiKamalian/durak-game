@@ -8,3 +8,7 @@ export const useAppSelector = () => {
 export const useAuthSelector = () => {
   return { ...useSelector((state: RootState) => state.auth) };
 };
+
+export const useAIGameSelector = () => {
+  return { ...useSelector((state: RootState) => state.aiGame) };
+};

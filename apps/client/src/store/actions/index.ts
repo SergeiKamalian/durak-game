@@ -1,10 +1,11 @@
 import { useDispatch } from "react-redux";
 import {
+  changeAIGame,
   changeAppInitializedStatus,
   changeAppLoadingStatus,
   changeUser,
 } from "../slices";
-import { UserType } from "../../../../../packages/shared";
+import { Game, UserType } from "../../../../../packages/shared";
 
 export const useAppActions = () => {
   const dispatch = useDispatch();
@@ -27,4 +28,12 @@ export const useAuthActions = () => {
   const setUser = (user: UserType | null) => dispatch(changeUser(user));
 
   return { setUser };
+};
+
+export const useAIGameActions = () => {
+  const dispatch = useDispatch();
+
+  const setAIGame = (game: Game | null) => dispatch(changeAIGame(game));
+
+  return { setAIGame };
 };

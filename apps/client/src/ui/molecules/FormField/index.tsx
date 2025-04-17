@@ -32,7 +32,7 @@ export const FormField = memo((props: FormFieldProps) => {
         </Text>
       ) : null}
       <StyledFormField>
-        <Field {...props} id="field" />
+        <Field {...props} />
       </StyledFormField>
       <ErrorMessage
         {...props}

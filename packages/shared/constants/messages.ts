@@ -33,4 +33,8 @@ export const MESSAGES = {
       "Hmm... That username is already taken. Try something else?",
     SUCCESS: "You're all set! Welcome aboard 🎉",
   },
+  CREATING_AI_GAME: {
+    GUEST_ID_ERROR: "Nice job clearing localStorage — you broke the system 😄",
+    SUCCESS: "You're all set! Welcome aboard 🎉",
+  },
 };

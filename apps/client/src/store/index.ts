@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { appReducer, authReducer } from "./slices";
+import { appReducer, authReducer, aiGameReducer } from "./slices";
 
 export const store = configureStore({
   reducer: {
     app: appReducer,
     auth: authReducer,
+    aiGame: aiGameReducer,
   },
 });
 

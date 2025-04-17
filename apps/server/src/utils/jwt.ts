@@ -7,6 +7,10 @@ export const generateAccessToken = (userId: string | number) => {
   return jwt.sign({ userId }, ACCESS_SECRET, { expiresIn: "1d" });
 };
 
+export const generateSessionToken = (guestId: string) => {
+  return jwt.sign({ guestId }, ACCESS_SECRET, { expiresIn: "1d" });
+};
+
 export const generateRefreshToken = (userId: string | number) => {
   return jwt.sign({ userId }, REFRESH_SECRET, { expiresIn: "7d" });
 };

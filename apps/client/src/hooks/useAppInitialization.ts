@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { getAccessToken } from "../utils";
+import { generateGuestId, getAccessToken, getGuestId } from "../utils";
 import { useAppSelector, useAppActions, useAuthActions } from "../store";
 import { AuthService } from "../api";
 
@@ -12,7 +12,12 @@ export const useAppInitialization = () => {
     if (isInitialized) return;
     try {
       const token = getAccessToken();
-      if (!token) return;
+      if (!token) {
+        const guestId = getGuestId();
+        if (guestId) return;
+        generateGuestId();
+        return;
+      }
       const userRes = await AuthService.whoami();
       setUser(userRes);
     } catch (error) {

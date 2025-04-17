@@ -58,12 +58,14 @@ export const friendService = {
     });
 
     const friends = userPrivateData.friendships.friends.map(({ userId }) => ({
-      user: friendsData?.data?.find(({ _id }) => _id === userId),
+      user: friendsData?.data?.find(({ _id }) => _id === String(userId)),
     }));
     const requests = userPrivateData.friendships.requests.map(
       ({ fromUserId, requestedDate }) => ({
         requestedDate,
-        user: friendRequestsData?.data?.find(({ _id }) => _id === fromUserId),
+        user: friendRequestsData?.data?.find(
+          ({ _id }) => _id === String(fromUserId)
+        ),
       })
     );
 

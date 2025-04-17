@@ -43,7 +43,6 @@ export const Wrapper: FC<WrapperProps> = memo((props) => {
     withAnimation = false,
     overflow,
   } = props;
-  console.log(maxHeight);
 
   if (!withAnimation)
     return (

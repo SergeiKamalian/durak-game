@@ -1,6 +1,6 @@
 import { memo } from "react";
-import { StyledAIBtn, StyledAuth, StyledImage } from "./styles";
-import { Button, FormField, Image, Text, Wrapper } from "../../ui";
+import { StyledAuth } from "./styles";
+import { Button, FormField, Text, Wrapper } from "../../ui";
 import { HiOutlineKey, HiOutlineUserCircle } from "react-icons/hi";
 import { Formik } from "formik";
 import {
@@ -8,9 +8,15 @@ import {
   REGISTRATION_SCHEMA,
 } from "../../constants";
 import { useAuth } from "./useAuth";
+import { OpenAIGame } from "../OpenAIGame";
+import { useAIGameSelector } from "../../store";
+import { GameRoom } from "../GameRoom";
 
 export const Auth = memo(() => {
   const { handleSubmit, isAuthorization, switchAuthView, theme } = useAuth();
+  const { aiGame } = useAIGameSelector();
+  return <GameRoom />;
+  if (aiGame) return <GameRoom />;
 
   return (
     <StyledAuth>
@@ -87,38 +93,7 @@ export const Auth = memo(() => {
           </Text>
         </Wrapper>
       </Wrapper>
-      <StyledAIBtn>
-        <Wrapper
-          withAnimation
-          background={"#12141ec2"}
-          border={"1px solid #7a788130"}
-          blur="10px"
-          padding="20px"
-          direction="row"
-          minWidth="450px"
-          borderRadius="30px"
-          alignItems="center"
-          withBoxShadow
-          minHeight="40px"
-          maxHeight="40px"
-          overflow="hidden"
-        >
-          <Text cursor="pointer" fz={26}>
-            Play with{" "}
-            <Text cursor="pointer" fw={600} type="span" color="#0ca37f">
-              OpenAI
-            </Text>
-          </Text>
-          <StyledImage>
-            <Image
-              url="../../../public/openai.png"
-              width="70px"
-              height="70px"
-              alt="openAi"
-            />
-          </StyledImage>
-        </Wrapper>
-      </StyledAIBtn>
+      <OpenAIGame />
     </StyledAuth>
   );
 });
