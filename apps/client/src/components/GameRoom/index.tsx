@@ -12,7 +12,7 @@ export const GameRoom = memo(() => {
       justifyContent="center"
     >
       <Table />
-      {/* <PlayerCards /> */}
+      <PlayerCards />
     </Wrapper>
   );
 });

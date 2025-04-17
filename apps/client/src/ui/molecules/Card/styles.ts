@@ -30,7 +30,7 @@ export const StyledBackCard = styled(StyledCard)`
     rgba(238, 89, 94, 1) 100%
   );
   border-color: rgba(249, 193, 188, 0.51);
-  box-shadow: 5px 8px 8px -2px #263756, inset 0px 0px 2px 3px #fe9296;
+  box-shadow: 5px 8px 8px -2px #263756, inset 1px 1px 1px 2px #fe9296;
   position: relative;
   overflow: hidden;
   img {

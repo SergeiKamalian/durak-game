@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledCardsWrapper = styled.div`
   width: 300px;
   position: absolute;
-  bottom: -30px;
+  bottom: -20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,9 +16,9 @@ export const StyledPlayerCards = styled.div`
   left: 35%;
 `;
 
-export const StyledDiv = styled.div<{ index: number }>`
+export const StyledCardWrapper = styled.div<{ index: number }>`
   position: absolute;
   transform-origin: 50% 100%;
-  transform: rotate(${(p) => p.index * 5}deg)
-    translate(calc(20px * ${(p) => p.index}), 0px) scale(1.2);
+  transform: rotate(${(p) => p.index * 2}deg)
+    translate(calc(60px * ${(p) => p.index}), 0px) scale(2);
 `;
