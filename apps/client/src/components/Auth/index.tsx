@@ -9,14 +9,9 @@ import {
 } from "../../constants";
 import { useAuth } from "./useAuth";
 import { OpenAIGame } from "../OpenAIGame";
-import { useAIGameSelector } from "../../store";
-import { GameRoom } from "../GameRoom";
 
 export const Auth = memo(() => {
   const { handleSubmit, isAuthorization, switchAuthView, theme } = useAuth();
-  const { aiGame } = useAIGameSelector();
-  return <GameRoom />;
-  if (aiGame) return <GameRoom />;
 
   return (
     <StyledAuth>

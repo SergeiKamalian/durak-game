@@ -4,6 +4,7 @@ import { Image, Text, Wrapper } from "../../ui";
 import { handleError } from "../../handlers";
 import { AIGameService } from "../../api";
 import { useAIGameActions, useAppActions } from "../../store";
+import { startGameWithAI } from "../../utils";
 
 export const OpenAIGame = memo(() => {
   const { setAppLoadingStatus } = useAppActions();
@@ -13,6 +14,7 @@ export const OpenAIGame = memo(() => {
       setAppLoadingStatus(true);
       const gameRes = await AIGameService.createGame();
       setAIGame(gameRes);
+      startGameWithAI();
     } catch (error) {
       handleError(error);
     } finally {

@@ -17,18 +17,14 @@ export const AIGameService = new (class {
       )
       .then((res) => res.data);
   }
-  async getGame(): Promise<unknown> {
+  async getGame(): Promise<Game | null> {
     const guestId = getGuestId();
     return axiosInstance
-      .post(
-        "/ai-game/get-room",
-        {},
-        {
-          headers: {
-            guestId,
-          },
-        }
-      )
-      .then((res) => res.data);
+      .get("/ai-game/get-room", {
+        headers: {
+          guestId,
+        },
+      })
+      .then((res) => res.data.game);
   }
 })();

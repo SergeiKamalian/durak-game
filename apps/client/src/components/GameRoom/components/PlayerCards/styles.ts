@@ -3,11 +3,12 @@ import styled from "styled-components";
 export const StyledCardsWrapper = styled.div`
   width: 300px;
   position: absolute;
-  bottom: -20px;
+  bottom: -40px;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 120px;
+  z-index: 10;
 `;
 
 export const StyledPlayerCards = styled.div`

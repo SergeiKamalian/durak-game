@@ -10,7 +10,7 @@ export const generatePlayersTablePositions = (
       return [
         { left: -distance + 5 },
         { left: tableHeight / 4 - distance, top: 0 },
-        { right: tableWidth / 2, top: -distance + 10 },
+        { top: -distance + 10 },
         { right: tableHeight / 4 - distance, top: 0 },
         { right: -distance + 5 },
       ];
@@ -25,7 +25,7 @@ export const generatePlayersTablePositions = (
     case 3:
       return [
         { left: -distance + 20, top: tableHeight / 4 },
-        { right: tableWidth / 2, top: -distance + 10 },
+        { top: -distance + 10 },
         { right: -distance + 20, top: tableHeight / 4 },
       ];
 
@@ -35,7 +35,7 @@ export const generatePlayersTablePositions = (
         { right: tableWidth / 4 + distance / 2, top: -distance + 10 },
       ];
     case 1:
-      return [{ right: tableWidth / 2, top: -distance + 10 }];
+      return [{ top: -distance + 10 }];
 
     default:
       return [];

@@ -1,23 +1,47 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 import {
   StyledCardWrapper,
   StyledPlayerCards,
   StyledCardsWrapper,
 } from "./styles";
 import { Card } from "../../../../ui";
+import { useAIGameSelector } from "../../../../store";
+import {
+  getCardsPositions,
+  getGuestId,
+  sortUserCards,
+} from "../../../../utils";
 
 export const PlayerCards = memo(() => {
-  const array = [-2.5, -1.5, -0.5, 0.5, 1.5, 2.5];
-  const array2 = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6];
+  const { aiGame } = useAIGameSelector();
+
+  const player = useMemo(
+    () => aiGame?.players.find((player) => player.user._id === getGuestId()),
+    [aiGame?.players]
+  );
+
+  const { cardsPositions, playerCards } = useMemo(() => {
+    const cardsPositions = getCardsPositions(player!.cardIds!.length);
+    const playerCards = sortUserCards(player!.cardIds, aiGame!.trump);
+    return {
+      cardsPositions,
+      playerCards,
+    };
+  }, [aiGame, player]);
+
+  if (!player) return;
 
   return (
     <StyledCardsWrapper>
       <StyledPlayerCards>
-        {array2.map((i, index) => (
-          <StyledCardWrapper index={i} key={i}>
-            <Card id={20 + index} />
-          </StyledCardWrapper>
-        ))}
+        {cardsPositions.map((i, index) => {
+          const cardId = playerCards[index];
+          return (
+            <StyledCardWrapper index={i} key={i}>
+              <Card id={cardId} />
+            </StyledCardWrapper>
+          );
+        })}
       </StyledPlayerCards>
     </StyledCardsWrapper>
   );

@@ -1,4 +1,4 @@
-import { ALL_CARDS, CardSuits, Player } from "../../../../packages/shared";
+import { CardSuits, getCardById, Player } from "../../../../packages/shared";
 
 export const giveRandomCards = (
   deckCardsIds: number[],
@@ -21,9 +21,11 @@ export const giveRandomCards = (
   const newCards = shuffledDeck.slice(0, cardsNeeded);
   const remainingDeck = shuffledDeck.slice(cardsNeeded);
 
+  const updatedCurrentCardsIds = [...currentCardsIds, ...newCards];
+
   return {
     updatedDeckCardsIds: remainingDeck,
-    updatedCurrentCardsIds: [...currentCardsIds, ...newCards],
+    updatedCurrentCardsIds,
   };
 };
 
@@ -40,7 +42,7 @@ export const getGameTrump = (
   const randomIndex = Math.floor(Math.random() * deckCardsIds.length);
   const gameTrumpId = deckCardsIds[randomIndex];
 
-  const foundCard = ALL_CARDS.find(({ id }) => id === gameTrumpId);
+  const foundCard = getCardById(gameTrumpId);
 
   if (!foundCard) {
     throw new Error("Error");
@@ -57,9 +59,6 @@ export const getGameTrump = (
     updatedDeckIds,
   };
 };
-
-export const getCardById = (id: number) =>
-  ALL_CARDS.find((card) => card.id === id) || ALL_CARDS[0];
 
 export const getStartingPlayer = (
   trump: CardSuits,

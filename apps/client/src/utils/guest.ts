@@ -8,3 +8,11 @@ export const generateGuestId = () => {
 export const getGuestId = (): string | null => {
   return localStorage.getItem("guestId");
 };
+
+export const startGameWithAI = () => {
+  localStorage.setItem("ai-game", "true");
+};
+
+export const getGameWithAIStatus = () => {
+  return Boolean(localStorage.getItem("ai-game"));
+};

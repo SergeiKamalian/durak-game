@@ -5,6 +5,7 @@ import {
   ERROR_MESSAGES,
   Game,
   GamePlayersCount,
+  MESSAGES,
   Player,
   UserType,
 } from "../../../../packages/shared";
@@ -71,7 +72,7 @@ export const gameService = {
       defendingPlayerId: defenderPlayer.user._id,
       isTurnAttacker: true,
       players,
-      playersCount: 2,
+      playersCount: players.length as 2,
       table: [],
       turnMaxTime: null,
       status: "starting",
@@ -81,6 +82,12 @@ export const gameService = {
     await AppRedis.set(redisColumnName, JSON.stringify(game));
 
     return game;
+  },
+
+  getAIGameRoom: async (guestId: string): Promise<Game | null> => {
+    const redisColumnName = `${REDIS_COLUMN_NAMES.AI_GAME}:${guestId}`;
+    const gameJson = await AppRedis.get(redisColumnName);
+    return gameJson ? JSON.parse(gameJson) : null;
   },
 
   createGameRoom: async (

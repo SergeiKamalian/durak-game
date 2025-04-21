@@ -1,13 +1,12 @@
 import { memo } from "react";
-import {
-  StyledCards,
-  StyledDeck,
-  StyledTable,
-  StyledTableInner,
-} from "./styles";
-import { Card } from "../../../../ui";
+import { StyledTable, StyledTableInner } from "./styles";
 
-import { Opponents } from "./components";
+import {
+  DiscardedCards,
+  Opponents,
+  RemainingDeck,
+  TableDeck,
+} from "./components";
 
 export const Table = memo(() => {
   return (
@@ -15,56 +14,9 @@ export const Table = memo(() => {
       <Opponents />
 
       <StyledTableInner>
-        <StyledDeck>
-          <StyledCards>
-            <Card id={23} />
-            <Card id={25} />
-          </StyledCards>
-          <StyledCards>
-            <Card id={23} />
-            <Card id={25} />
-          </StyledCards>
-          <StyledCards>
-            <Card id={23} />
-            <Card id={25} />
-          </StyledCards>
-          <StyledCards>
-            <Card id={23} />
-            <Card id={25} />
-          </StyledCards>
-          <StyledCards>
-            <Card id={23} />
-            <Card id={25} />
-          </StyledCards>
-          <StyledCards>
-            <Card id={23} />
-            <Card id={25} />
-          </StyledCards>
-        </StyledDeck>
-        {/* <StyledCards>
-          <Card id={23} />
-          <Card id={25} />
-        </StyledCards>
-        <StyledCards>
-          <Card id={23} />
-          <Card id={25} />
-        </StyledCards>
-        <StyledCards>
-          <Card id={23} />
-          <Card id={25} />
-        </StyledCards>
-        <StyledCards>
-          <Card id={23} />
-          <Card id={25} />
-        </StyledCards>
-        <StyledCards>
-          <Card id={23} />
-          <Card id={25} />
-        </StyledCards>
-        <StyledCards style={{ margin: 0 }}>
-          <Card id={23} />
-          <Card id={25} />
-        </StyledCards> */}
+        <RemainingDeck />
+        <DiscardedCards />
+        <TableDeck />
       </StyledTableInner>
     </StyledTable>
   );

@@ -1,13 +1,20 @@
-import { Auth, Profile } from "./components";
+import { useMemo } from "react";
+
 import { useAppInitialization } from "./hooks";
 import { AppProvider } from "./providers";
 import { useAuthSelector } from "./store";
+import { GuestProfile, Profile } from "./views";
 
 function App() {
   useAppInitialization();
   const { isAuth } = useAuthSelector();
 
-  return <AppProvider>{!isAuth ? <Auth /> : <Profile />}</AppProvider>;
+  const profileComponent = useMemo(
+    () => (isAuth ? <Profile /> : <GuestProfile />),
+    [isAuth]
+  );
+
+  return <AppProvider>{profileComponent}</AppProvider>;
 }
 
 export default App;
