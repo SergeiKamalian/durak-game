@@ -8,8 +8,8 @@ export const StyledOpponent = styled.div`
   border-radius: 30%;
   padding: 5px;
   background: #4d67a1;
-  border: 1px solid hsl(218.64deg 23.89% 48.43%);
-  box-shadow: -1px 5px 13px 1px #263756;
+  border: 1px solid hsl(218.64deg 32.02% 39.74%);
+  box-shadow: inset -1px 5px 13px 1px #263756;
   position: relative;
 `;
 export const StyledOpponentImage = styled.img`

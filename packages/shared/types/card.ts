@@ -12,4 +12,5 @@ export type Card = {
   suit: CardSuits;
   rank: Rank;
   value: Value;
+  textValue: string;
 };

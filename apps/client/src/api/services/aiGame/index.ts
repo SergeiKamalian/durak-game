@@ -27,4 +27,18 @@ export const AIGameService = new (class {
       })
       .then((res) => res.data.game);
   }
+  async aiTurn(): Promise<Game> {
+    const guestId = getGuestId();
+    return axiosInstance
+      .post(
+        "/ai-game/ai-turn",
+        {},
+        {
+          headers: {
+            guestId,
+          },
+        }
+      )
+      .then((res) => res.data);
+  }
 })();

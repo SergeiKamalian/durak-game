@@ -1,6 +1,6 @@
 import { UserType } from "./user";
 
-export type PlayerStatus = "connecting" | "active" | "left";
+export type PlayerStatus = "connecting" | "ready" | "active" | "left";
 
 export type Player = {
   user: UserType;

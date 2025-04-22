@@ -6,6 +6,7 @@ import {
   Game,
   GamePlayersCount,
   MESSAGES,
+  OPEN_AI_PLAYER_ID,
   Player,
   UserType,
 } from "../../../../packages/shared";
@@ -15,8 +16,14 @@ import {
   USER_DEFAULT_PRIVATE_INFO,
 } from "../constants";
 import { UserModel } from "../database/model";
-import { getGameTrump, getStartingPlayer, giveRandomCards } from "../utils";
+import {
+  generateTurnTime,
+  getGameTrump,
+  getStartingPlayer,
+  giveRandomCards,
+} from "../utils";
 import { AppRedis } from "../clients";
+import { getOpenaiAttackingMove, openai } from "../openai";
 
 export const gameService = {
   createAIGameRoom: async (guestId: string): Promise<Game> => {
@@ -37,8 +44,8 @@ export const gameService = {
       user: {
         createdAt: new Date(),
         updatedAt: new Date(),
-        name: "OpenAI",
-        _id: "OpenAI",
+        name: OPEN_AI_PLAYER_ID,
+        _id: OPEN_AI_PLAYER_ID,
       },
       status: "active",
       cardIds: openAICardsIds,
@@ -51,7 +58,7 @@ export const gameService = {
         name: "Guest",
         _id: guestId,
       },
-      status: "connecting",
+      status: "active",
       cardIds: playerCardsIds,
     };
 
@@ -74,8 +81,8 @@ export const gameService = {
       players,
       playersCount: players.length as 2,
       table: [],
-      turnMaxTime: null,
-      status: "starting",
+      turnMaxTime: generateTurnTime(),
+      status: "active",
     };
 
     const redisColumnName = `${REDIS_COLUMN_NAMES.AI_GAME}:${guestId}`;
@@ -88,6 +95,16 @@ export const gameService = {
     const redisColumnName = `${REDIS_COLUMN_NAMES.AI_GAME}:${guestId}`;
     const gameJson = await AppRedis.get(redisColumnName);
     return gameJson ? JSON.parse(gameJson) : null;
+  },
+
+  aiTurn: async (game: Game): Promise<Game | null> => {
+    const aiIsAttacker = game.attackingPlayerId === OPEN_AI_PLAYER_ID;
+    if (aiIsAttacker) {
+      const res = await getOpenaiAttackingMove(game);
+    } else {
+    }
+
+    return null;
   },
 
   createGameRoom: async (

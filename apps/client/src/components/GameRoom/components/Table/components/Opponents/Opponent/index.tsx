@@ -9,6 +9,7 @@ import {
 import { playersCardsPositions } from "../../../../../../../constants";
 import { Card, Text } from "../../../../../../../ui";
 import { Player } from "../../../../../../../../../../packages/shared";
+import { useOpponent } from "./useOpponent";
 
 interface OpponentProps {
   allPlayersCount: 2 | 3 | 4 | 5 | 6;
@@ -23,7 +24,9 @@ export const Opponent = memo((props: OpponentProps) => {
     [allPlayersCount, opponentIndex]
   );
 
-  if (!player) return;
+  const { isAttacker, isDefender } = useOpponent(player);
+
+  if (!player) return null;
 
   return (
     <StyledOpponent>
@@ -36,7 +39,7 @@ export const Opponent = memo((props: OpponentProps) => {
         }
       />
 
-      <StyledName>{player.user.name}</StyledName>
+      <StyledName>{`${isAttacker} ${isDefender}`}</StyledName>
       <StyledOpponentCards
         $cardsCount={player.cardIds.length > 6 ? 6 : player.cardIds.length}
         style={{ ...cardsStyles }}

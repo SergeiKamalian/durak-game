@@ -11,6 +11,7 @@ import {
   getGuestId,
   sortUserCards,
 } from "../../../../utils";
+import { PlayerController, PlayerInfo } from "./components";
 
 export const PlayerCards = memo(() => {
   const { aiGame } = useAIGameSelector();
@@ -19,6 +20,8 @@ export const PlayerCards = memo(() => {
     () => aiGame?.players.find((player) => player.user._id === getGuestId()),
     [aiGame?.players]
   );
+
+  const gameIsStarted = aiGame?.status === "active";
 
   const { cardsPositions, playerCards } = useMemo(() => {
     const cardsPositions = getCardsPositions(player!.cardIds!.length);
@@ -33,16 +36,21 @@ export const PlayerCards = memo(() => {
 
   return (
     <StyledCardsWrapper>
-      <StyledPlayerCards>
-        {cardsPositions.map((i, index) => {
-          const cardId = playerCards[index];
-          return (
-            <StyledCardWrapper index={i} key={i}>
-              <Card id={cardId} />
-            </StyledCardWrapper>
-          );
-        })}
-      </StyledPlayerCards>
+      <PlayerInfo />
+      <PlayerController playerPosition="start" />
+      {gameIsStarted ? (
+        <StyledPlayerCards>
+          {cardsPositions.map((i, index) => {
+            const cardId = playerCards[index];
+            return (
+              <StyledCardWrapper $index={i} key={i}>
+                <Card id={cardId} />
+              </StyledCardWrapper>
+            );
+          })}
+        </StyledPlayerCards>
+      ) : null}
+      {gameIsStarted ? <PlayerController playerPosition="defender" /> : null}
     </StyledCardsWrapper>
   );
 });

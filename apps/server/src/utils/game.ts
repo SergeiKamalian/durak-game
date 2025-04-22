@@ -103,3 +103,9 @@ export const getStartingPlayer = (
 
   return startingPlayer;
 };
+
+export const generateTurnTime = () => {
+  const now = new Date();
+  const plus60Seconds = new Date(now.getTime() + 60 * 1000);
+  return plus60Seconds;
+};
