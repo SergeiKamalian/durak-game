@@ -4,6 +4,7 @@ import {
   getRefreshToken,
   setAccessToken,
   removeTokens,
+  getGuestId,
 } from "../utils";
 
 const API_URL = "http://127.0.0.1:8000";
@@ -20,6 +21,11 @@ axiosInstance.interceptors.request.use(
     const accessToken = getAccessToken();
     if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
+    } else {
+      const guestId = getGuestId();
+      console.log(guestId);
+
+      config.headers["guestId"] = guestId;
     }
     return config;
   },

@@ -43,8 +43,12 @@ export const MESSAGES = {
     SUCCESS: "You're all set! Welcome aboard 🎉",
   },
   GAME: {
-    PARAMS_ISSUE: "PARAMS_ISSUE",
+    PARAMS_ISSUE:
+      "Hmm... Something’s off with the game parameters. Check again? 🤔",
+    GAME_NOT_FOUND: "Oops! We couldn't find that game — it might be gone 🕵️‍♂️",
     CHEATING: "Nice try, but cheating isn’t part of the game 😏",
     NOT_YOUR_TURN: "Hold up! It’s not your turn yet — patience is a virtue 😌",
+    ACCESS_DENIED_TO_ROOM:
+      "You don’t have access to this room — nice try tho 😎",
   },
 };

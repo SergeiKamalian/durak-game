@@ -23,7 +23,8 @@ export const OpenAIGame = memo(() => {
   // }, [setAppLoadingStatus, setAIGame]);
 
   const x = async () => {
-    const gameRes = await GameService.createGameRoom();
+    const gameRes = await GameService.createGameRoom({ withOpenAI: true });
+    console.log(gameRes.game);
   };
 
   return (

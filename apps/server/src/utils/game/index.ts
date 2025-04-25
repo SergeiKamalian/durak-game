@@ -231,5 +231,6 @@ export const getAttackerAndDefenderOnStartGame = (
   };
 };
 
-export * from "./gameStateActions";
+export * from "./stateActions";
 export * from "./generators";
+export * from "./checkers";

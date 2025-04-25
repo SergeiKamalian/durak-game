@@ -1,13 +1,10 @@
 import express from "express";
-import { authenticateToken, identifyUser } from "../middlewares";
-import { CREATE_GAME_ROOM } from "../controllers";
+import { gameChecker, identifyUser } from "../middlewares";
+import { CREATE_GAME_ROOM, PLAYER_TURN } from "../controllers";
 
 const GAME_ROUTE = express.Router();
 
 GAME_ROUTE.post("/create", identifyUser, CREATE_GAME_ROOM);
-// usersRoute.post("/login", loginUser);
-// usersRoute.post("/refresh", refreshToken);
-// usersRoute.post("/logout", logoutUser);
-// usersRoute.post("/whoami", authenticateToken, whoami);
+GAME_ROUTE.post("/:id/player-turn", gameChecker, PLAYER_TURN);
 
 export { GAME_ROUTE };

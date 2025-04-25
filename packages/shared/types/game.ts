@@ -24,11 +24,14 @@ type BaseGame = {
 };
 
 export type Game = BaseGame;
+
+export type TableCards = [number, number | undefined][];
+
 export type GameReturnType = {
   withOpenAI: boolean;
   id: string;
   players: PlayerReturnType[];
-  table: [number, number | undefined][];
+  table: TableCards;
   deckCardsCount: number;
   trump: CardSuits;
   attackingPlayerId: string;

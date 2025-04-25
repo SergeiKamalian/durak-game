@@ -9,12 +9,30 @@ import {
 } from "../../constants";
 import { useAuth } from "./useAuth";
 import { OpenAIGame } from "../OpenAIGame";
+import { GameService } from "../../api";
+import { getGuestId } from "../../utils";
 
 export const Auth = memo(() => {
   const { handleSubmit, isAuthorization, switchAuthView, theme } = useAuth();
-
+  const attack = async () => {
+    const res = await GameService.playerAttackTurn({
+      turn: "attack",
+      cardId: 1,
+      id: getGuestId() || "",
+    });
+  };
+  const defense = async () => {
+    const res = await GameService.playerDefenseTurn({
+      turn: "defense",
+      inTableCardId: 1,
+      playerCardId: 2,
+      id: getGuestId() || "",
+    });
+  };
   return (
     <StyledAuth>
+      <button onClick={attack}>attack</button>
+      <button onClick={defense}>defense</button>
       <Wrapper
         withAnimation
         background={"#12141ec2"}
