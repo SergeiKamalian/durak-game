@@ -25,6 +25,8 @@ export const SUCCESS_MESSAGES = {
 export const MESSAGES = {
   GENERAL: {
     UNKNOWN_ERROR: "Well, that’s awkward... Something went wrong 🤷‍♂️",
+    GUEST_ID_INVALID:
+      "Nice job clearing localStorage — you broke the system 😄",
   },
   LOGIN: {
     INVALID_CREDENTIALS:
@@ -41,6 +43,7 @@ export const MESSAGES = {
     SUCCESS: "You're all set! Welcome aboard 🎉",
   },
   GAME: {
+    PARAMS_ISSUE: "PARAMS_ISSUE",
     CHEATING: "Nice try, but cheating isn’t part of the game 😏",
     NOT_YOUR_TURN: "Hold up! It’s not your turn yet — patience is a virtue 😌",
   },

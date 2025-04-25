@@ -2,28 +2,32 @@ import { memo, useCallback } from "react";
 import { StyledAIBtn, StyledImage } from "./styles";
 import { Image, Text, Wrapper } from "../../ui";
 import { handleError } from "../../handlers";
-import { AIGameService } from "../../api";
+import { AIGameService, GameService } from "../../api";
 import { useAIGameActions, useAppActions } from "../../store";
 import { startGameWithAI } from "../../utils";
 
 export const OpenAIGame = memo(() => {
   const { setAppLoadingStatus } = useAppActions();
   const { setAIGame } = useAIGameActions();
-  const startGameWithAi = useCallback(async () => {
-    try {
-      setAppLoadingStatus(true);
-      const gameRes = await AIGameService.createGame();
-      setAIGame(gameRes);
-      startGameWithAI();
-    } catch (error) {
-      handleError(error);
-    } finally {
-      setAppLoadingStatus(false);
-    }
-  }, [setAppLoadingStatus, setAIGame]);
+  // const startGameWithAi = useCallback(async () => {
+  //   try {
+  //     setAppLoadingStatus(true);
+  //     const gameRes = await AIGameService.createGame();
+  //     setAIGame(gameRes);
+  //     startGameWithAI();
+  //   } catch (error) {
+  //     handleError(error);
+  //   } finally {
+  //     setAppLoadingStatus(false);
+  //   }
+  // }, [setAppLoadingStatus, setAIGame]);
+
+  const x = async () => {
+    const gameRes = await GameService.createGameRoom();
+  };
 
   return (
-    <StyledAIBtn onClick={startGameWithAi}>
+    <StyledAIBtn onClick={x}>
       <Wrapper
         withAnimation
         background={"#12141ec2"}

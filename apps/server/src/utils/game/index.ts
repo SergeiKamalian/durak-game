@@ -5,7 +5,7 @@ import {
   getCardById,
   MESSAGES,
   Player,
-} from "../../../../packages/shared";
+} from "../../../../../packages/shared";
 
 export const giveRandomCards = (
   deckCardsIds: number[],
@@ -75,49 +75,6 @@ export const getGameTrump = (
     gameTrump: foundCard.suit,
     updatedDeckIds,
   };
-};
-
-export const getStartingPlayer = (
-  trump: CardSuits,
-  players: Player[]
-): Player => {
-  const playersWithTrumpCards = players
-    .map((player) => {
-      const trumpCards = player.cardIds
-        .map(getCardById)
-        .filter((card) => card.suit === trump);
-
-      return {
-        player,
-        trumpCards,
-      };
-    })
-    .filter(({ trumpCards }) => trumpCards.length > 0);
-
-  if (playersWithTrumpCards.length === 0) {
-    return players[0];
-  }
-
-  if (playersWithTrumpCards.length === 1) {
-    return playersWithTrumpCards[0].player;
-  }
-
-  let minValue = Infinity;
-  let startingPlayer: Player = players[0];
-
-  playersWithTrumpCards.forEach(({ player, trumpCards }) => {
-    const playerMinCard = trumpCards.reduce(
-      (minCard, card) => (card.value < minCard.value ? card : minCard),
-      trumpCards[0]
-    );
-
-    if (playerMinCard.value < minValue) {
-      minValue = playerMinCard.value;
-      startingPlayer = player;
-    }
-  });
-
-  return startingPlayer;
 };
 
 export const generateTurnTime = () => {
@@ -195,3 +152,84 @@ export const convertSuitToSymbol = (suit: string): string => {
       return suit;
   }
 };
+
+// NEW FUNCTIONALITY
+
+export const giveCardsToPlayers = (
+  prevDeck: number[],
+  prevPlayers: Player[]
+) => {
+  let deck = prevDeck;
+  const players = prevPlayers.map((player) => {
+    const { updatedCurrentCardsIds, updatedDeckCardsIds } = giveRandomCards(
+      deck,
+      player.cardIds
+    );
+    deck = updatedDeckCardsIds;
+    return { ...player, cardIds: updatedCurrentCardsIds };
+  });
+  return { deck, players };
+};
+
+export const getStartingPlayer = (
+  trump: CardSuits,
+  players: Player[]
+): Player => {
+  const playersWithTrumpCards = players
+    .map((player) => {
+      const trumpCards = player.cardIds
+        .map(getCardById)
+        .filter((card) => card.suit === trump);
+
+      return {
+        player,
+        trumpCards,
+      };
+    })
+    .filter(({ trumpCards }) => trumpCards.length > 0);
+
+  if (playersWithTrumpCards.length === 0) {
+    return players[0];
+  }
+
+  if (playersWithTrumpCards.length === 1) {
+    return playersWithTrumpCards[0].player;
+  }
+
+  let minValue = Infinity;
+  let startingPlayer: Player = players[0];
+
+  playersWithTrumpCards.forEach(({ player, trumpCards }) => {
+    const playerMinCard = trumpCards.reduce(
+      (minCard, card) => (card.value < minCard.value ? card : minCard),
+      trumpCards[0]
+    );
+
+    if (playerMinCard.value < minValue) {
+      minValue = playerMinCard.value;
+      startingPlayer = player;
+    }
+  });
+
+  return startingPlayer;
+};
+
+export const getAttackerAndDefenderOnStartGame = (
+  trump: CardSuits,
+  players: Player[]
+) => {
+  const attacker = getStartingPlayer(trump, players);
+  const attackerIndex = players.findIndex(
+    ({ user }) => user._id === attacker.user._id
+  );
+  const defenderIndex =
+    attackerIndex === players.length - 1 ? 0 : attackerIndex + 1;
+
+  return {
+    attacker,
+    defender: players[defenderIndex],
+  };
+};
+
+export * from "./gameStateActions";
+export * from "./generators";

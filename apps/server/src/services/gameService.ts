@@ -59,6 +59,7 @@ export const gameService = {
       },
       status: "active",
       cardIds: openAICardsIds,
+      index: 0,
     };
 
     const guestPlayer: Player = {
@@ -70,6 +71,7 @@ export const gameService = {
       },
       status: "active",
       cardIds: playerCardsIds,
+      index: 1,
     };
 
     const players = [guestPlayer, openAIPlayer];
@@ -94,6 +96,7 @@ export const gameService = {
       table: [],
       turnMaxTime: generateTurnTime(),
       status: "active",
+      code: "",
     };
 
     const redisColumnName = `${REDIS_COLUMN_NAMES.AI_GAME}:${guestId}`;

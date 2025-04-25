@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { Button, Text, Wrapper } from "../../ui";
 import { useProfile } from "./useProfile";
+import { OpenAIGame } from "../../components";
 
 export const Profile = memo(() => {
   const { logout } = useProfile();
@@ -14,6 +15,7 @@ export const Profile = memo(() => {
       <Button onClick={logout} widthFitContent>
         <Text>Logout</Text>
       </Button>
+      <OpenAIGame />
     </Wrapper>
   );
 });

@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import http from "http";
-import { AIGameRoute, usersRoute } from "./routes";
+import { AIGameRoute, usersRoute, GAME_ROUTE } from "./routes";
 
 import { setupWebSocket } from "./ws";
 import { connectDB } from "./database/db";
@@ -19,6 +19,9 @@ app.use(cors());
 // Routes
 app.use("/users", usersRoute);
 app.use("/ai-game", AIGameRoute);
+
+// new
+app.use("/game", GAME_ROUTE);
 
 // WebSocket
 setupWebSocket(server);
