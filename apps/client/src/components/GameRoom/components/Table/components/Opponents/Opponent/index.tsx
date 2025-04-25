@@ -5,10 +5,14 @@ import {
   StyledOpponent,
   StyledOpponentCards,
   StyledOpponentImage,
+  StyledOpponentMessage,
 } from "./styles";
 import { playersCardsPositions } from "../../../../../../../constants";
 import { Card, Text } from "../../../../../../../ui";
-import { Player } from "../../../../../../../../../../packages/shared";
+import {
+  getCardById,
+  Player,
+} from "../../../../../../../../../../packages/shared";
 import { useOpponent } from "./useOpponent";
 
 interface OpponentProps {
@@ -24,12 +28,18 @@ export const Opponent = memo((props: OpponentProps) => {
     [allPlayersCount, opponentIndex]
   );
 
-  const { isAttacker, isDefender } = useOpponent(player);
+  const { isAttacker, playerIsDefenderAndDefenderSurrendered } =
+    useOpponent(player);
 
   if (!player) return null;
 
   return (
     <StyledOpponent>
+      <ul style={{ position: "absolute", zIndex: "10", left: "150%" }}>
+        {player.cardIds.map(getCardById).map((i) => (
+          <li key={i.id}>{i.textValue}</li>
+        ))}
+      </ul>
       <StyledOpponentImage
         alt="Opponent name"
         src={
@@ -38,8 +48,10 @@ export const Opponent = memo((props: OpponentProps) => {
             : "https://i.pinimg.com/736x/23/9d/3d/239d3de341dd3ef0690c596e4e825d87.jpg"
         }
       />
-
-      <StyledName>{`${isAttacker} ${isDefender}`}</StyledName>
+      {!!playerIsDefenderAndDefenderSurrendered && (
+        <StyledOpponentMessage>I take</StyledOpponentMessage>
+      )}
+      <StyledName>{player.user.name}</StyledName>
       <StyledOpponentCards
         $cardsCount={player.cardIds.length > 6 ? 6 : player.cardIds.length}
         style={{ ...cardsStyles }}

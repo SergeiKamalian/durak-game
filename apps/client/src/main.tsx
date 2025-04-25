@@ -58,12 +58,12 @@ input:-webkit-autofill {
 `;
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <GlobalStyles />
-        <App />
-      </Provider>
-    </ThemeProvider>
-  </StrictMode>
+  // <StrictMode>
+  <ThemeProvider theme={theme}>
+    <Provider store={store}>
+      <GlobalStyles />
+      <App />
+    </Provider>
+  </ThemeProvider>
+  // </StrictMode>
 );

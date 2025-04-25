@@ -14,12 +14,13 @@ export const StyledCards = styled.div`
   min-width: 125px;
   min-height: 110px;
 
-  > :first-child {
+  > :nth-child(1) {
     position: absolute;
     top: 0;
     left: 0;
   }
-  > :last-child {
+
+  > :nth-child(2) {
     position: absolute;
     left: 25px;
     top: 10px;

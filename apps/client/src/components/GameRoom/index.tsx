@@ -2,12 +2,12 @@ import { memo } from "react";
 import { Wrapper } from "../../ui";
 import { PlayerCards, Table } from "./components";
 import { useAIGameSelector } from "../../store";
-import { useGameRoom } from "./hooks";
 
-export const GameRoom = memo(() => {
+import { AIGameProvider, useAiGame } from "../../context";
+
+const GameRoomComponent = memo(() => {
   const { aiGame } = useAIGameSelector();
-
-  useGameRoom();
+  const { x } = useAiGame();
 
   return (
     <Wrapper
@@ -20,10 +20,18 @@ export const GameRoom = memo(() => {
       <div style={{ maxWidth: 200, position: "absolute", left: 0 }}>
         <p>attacker: {aiGame?.attackingPlayerId}</p>
         <p>defender: {aiGame?.defendingPlayerId}</p>
-        <p>time: {aiGame?.turnMaxTime}</p>
+        <p>turn: {aiGame?.turnPlayerId}</p>
       </div>
       <Table />
       <PlayerCards />
     </Wrapper>
+  );
+});
+
+export const GameRoom = memo(() => {
+  return (
+    <AIGameProvider>
+      <GameRoomComponent />
+    </AIGameProvider>
   );
 });

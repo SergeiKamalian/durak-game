@@ -13,10 +13,11 @@ import { getCardById } from "../../../../../../packages/shared";
 interface CardProps {
   isBack?: boolean;
   id?: number;
+  onClick?: VoidFunction;
 }
 
 export const Card = memo((props: CardProps) => {
-  const { id, isBack } = props;
+  const { id, isBack, onClick } = props;
 
   const cardValues = useMemo(() => {
     if (!isBack) return getCardById(id || 0);
@@ -32,7 +33,7 @@ export const Card = memo((props: CardProps) => {
     );
 
   return (
-    <StyledCard>
+    <StyledCard onClick={onClick} $isSelectable={!!onClick}>
       <StyledValues>
         <StyledRank>{cardValues?.rank}</StyledRank>
         <StyledSuit

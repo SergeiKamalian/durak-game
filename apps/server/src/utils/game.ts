@@ -1,4 +1,11 @@
-import { CardSuits, getCardById, Player } from "../../../../packages/shared";
+import {
+  Card,
+  CardSuits,
+  Game,
+  getCardById,
+  MESSAGES,
+  Player,
+} from "../../../../packages/shared";
 
 export const giveRandomCards = (
   deckCardsIds: number[],
@@ -16,10 +23,20 @@ export const giveRandomCards = (
       updatedCurrentCardsIds: currentCardsIds,
     };
   }
+  const removedCard =
+    deckCardsIds.length > cardsNeeded
+      ? deckCardsIds[deckCardsIds.length - 1]
+      : null;
+  const updatedDeck =
+    deckCardsIds.length > cardsNeeded
+      ? deckCardsIds.slice(0, deckCardsIds.length - 1)
+      : deckCardsIds;
 
-  const shuffledDeck = [...deckCardsIds].sort(() => Math.random() - 0.5);
+  const shuffledDeck = [...updatedDeck].sort(() => Math.random() - 0.5);
   const newCards = shuffledDeck.slice(0, cardsNeeded);
-  const remainingDeck = shuffledDeck.slice(cardsNeeded);
+  const remainingDeck = removedCard
+    ? [...shuffledDeck.slice(cardsNeeded), removedCard]
+    : shuffledDeck.slice(cardsNeeded);
 
   const updatedCurrentCardsIds = [...currentCardsIds, ...newCards];
 
@@ -85,7 +102,6 @@ export const getStartingPlayer = (
     return playersWithTrumpCards[0].player;
   }
 
-  // Несколько игроков — ищем того, у кого минимальный value козырной карты
   let minValue = Infinity;
   let startingPlayer: Player = players[0];
 
@@ -108,4 +124,74 @@ export const generateTurnTime = () => {
   const now = new Date();
   const plus60Seconds = new Date(now.getTime() + 60 * 1000);
   return plus60Seconds;
+};
+
+export const tryBeatCard = (
+  attackingCard: Card,
+  defendingCard: Card,
+  trump: CardSuits
+): boolean => {
+  if (attackingCard.suit === defendingCard.suit) {
+    return defendingCard.value > attackingCard.value;
+  } else if (defendingCard.suit === trump) return true;
+  return false;
+};
+
+export const tryAttackCard = (
+  attackingCardId: number,
+  table: [number, number | undefined][]
+): boolean => {
+  if (!table.length) return true;
+  const attackingCard = getCardById(attackingCardId);
+  return !!table.some(
+    ([first, second]) =>
+      getCardById(first).value === attackingCard.value ||
+      (second ? getCardById(second).value === attackingCard.value : false)
+  );
+};
+
+export const getNewAttackerAndDefenderPlayerOnFinishGame = (
+  game: Game,
+  action: "beaten" | "take"
+) => {
+  const players = game.players;
+  const defenderIndex = players.findIndex(
+    ({ user }) => user._id === game.defendingPlayerId
+  );
+
+  if (defenderIndex === -1) {
+    throw new Error(MESSAGES.GENERAL.UNKNOWN_ERROR);
+  }
+
+  let newAttackerIndex: number;
+  let newDefenderIndex: number;
+
+  if (action === "beaten") {
+    newAttackerIndex = defenderIndex;
+    newDefenderIndex = (newAttackerIndex + 1) % players.length;
+  } else {
+    // take
+    newAttackerIndex = (defenderIndex + 1) % players.length;
+    newDefenderIndex = (newAttackerIndex + 1) % players.length;
+  }
+
+  return {
+    newAttackingPlayerId: players[newAttackerIndex].user._id,
+    newDefendingPlayerId: players[newDefenderIndex].user._id,
+  };
+};
+
+export const convertSuitToSymbol = (suit: string): string => {
+  switch (suit) {
+    case "spades":
+      return "♠";
+    case "hearts":
+      return "♥";
+    case "diamonds":
+      return "♦";
+    case "clubs":
+      return "♣";
+    default:
+      return suit;
+  }
 };

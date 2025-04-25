@@ -7,8 +7,12 @@ export const useOpponent = (player: Player) => {
   const isAttacker = player.user._id === aiGame?.attackingPlayerId;
   const isDefender = player.user._id === aiGame?.defendingPlayerId;
 
+  const playerIsDefenderAndDefenderSurrendered = !!(
+    aiGame?.defenderSurrendered && isDefender
+  );
+
   return {
     isAttacker,
-    isDefender,
+    playerIsDefenderAndDefenderSurrendered,
   };
 };

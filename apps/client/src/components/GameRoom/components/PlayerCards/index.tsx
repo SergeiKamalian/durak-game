@@ -12,9 +12,11 @@ import {
   sortUserCards,
 } from "../../../../utils";
 import { PlayerController, PlayerInfo } from "./components";
+import { useAiGame } from "../../../../context";
 
 export const PlayerCards = memo(() => {
   const { aiGame } = useAIGameSelector();
+  const { selectPlayerCardHandler, playerSelectedCardId } = useAiGame();
 
   const player = useMemo(
     () => aiGame?.players.find((player) => player.user._id === getGuestId()),
@@ -22,6 +24,10 @@ export const PlayerCards = memo(() => {
   );
 
   const gameIsStarted = aiGame?.status === "active";
+
+  const isPlayerTurn = player?.user._id === aiGame?.turnPlayerId;
+  const playerIsAttacker = aiGame?.attackingPlayerId === player?.user._id;
+  const playerIsDefender = aiGame?.defendingPlayerId === player?.user._id;
 
   const { cardsPositions, playerCards } = useMemo(() => {
     const cardsPositions = getCardsPositions(player!.cardIds!.length);
@@ -37,20 +43,32 @@ export const PlayerCards = memo(() => {
   return (
     <StyledCardsWrapper>
       <PlayerInfo />
-      <PlayerController playerPosition="start" />
       {gameIsStarted ? (
         <StyledPlayerCards>
           {cardsPositions.map((i, index) => {
             const cardId = playerCards[index];
             return (
-              <StyledCardWrapper $index={i} key={i}>
-                <Card id={cardId} />
+              <StyledCardWrapper
+                $index={i}
+                key={i}
+                $isSelected={playerSelectedCardId === cardId}
+              >
+                <Card
+                  onClick={() => selectPlayerCardHandler(cardId)}
+                  id={cardId}
+                />
               </StyledCardWrapper>
             );
           })}
         </StyledPlayerCards>
       ) : null}
-      {gameIsStarted ? <PlayerController playerPosition="defender" /> : null}
+      {isPlayerTurn ? (
+        <PlayerController
+          isPlayerTurn={isPlayerTurn}
+          playerIsAttacker={playerIsAttacker}
+          playerIsDefender={playerIsDefender}
+        />
+      ) : null}
     </StyledCardsWrapper>
   );
 });

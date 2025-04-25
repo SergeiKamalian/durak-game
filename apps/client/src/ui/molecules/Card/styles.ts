@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const StyledCard = styled.div`
+export const StyledCard = styled.div<{ $isSelectable?: boolean }>`
   background: linear-gradient(
     145deg,
     rgba(88, 120, 168, 1) 0%,
@@ -16,7 +16,7 @@ export const StyledCard = styled.div`
   position: relative;
   z-index: 1;
 
-  cursor: pointer;
+  cursor: ${(p) => p.$isSelectable && "pointer"};
   * {
     user-select: none;
   }

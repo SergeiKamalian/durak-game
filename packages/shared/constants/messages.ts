@@ -23,6 +23,9 @@ export const SUCCESS_MESSAGES = {
 };
 
 export const MESSAGES = {
+  GENERAL: {
+    UNKNOWN_ERROR: "Well, that’s awkward... Something went wrong 🤷‍♂️",
+  },
   LOGIN: {
     INVALID_CREDENTIALS:
       "Oops! Looks like your username or password is incorrect.",
@@ -36,5 +39,9 @@ export const MESSAGES = {
   CREATING_AI_GAME: {
     GUEST_ID_ERROR: "Nice job clearing localStorage — you broke the system 😄",
     SUCCESS: "You're all set! Welcome aboard 🎉",
+  },
+  GAME: {
+    CHEATING: "Nice try, but cheating isn’t part of the game 😏",
+    NOT_YOUR_TURN: "Hold up! It’s not your turn yet — patience is a virtue 😌",
   },
 };

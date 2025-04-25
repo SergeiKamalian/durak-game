@@ -15,6 +15,7 @@ export const Table = memo(() => {
 
       <StyledTableInner>
         <RemainingDeck />
+        <TableDeck />
         {/* <DiscardedCards />
         <TableDeck /> */}
       </StyledTableInner>

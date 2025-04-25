@@ -1,40 +1,39 @@
 import { memo, useMemo } from "react";
-import {
-  StyledPlayerController,
-  StyledPlayerControllerItem,
-  StyledStartGame,
-} from "./styles";
+import { StyledPlayerController, StyledPlayerControllerItem } from "./styles";
 import { Text } from "../../../../../../ui";
+import { useAiGame } from "../../../../../../context";
 
 interface PlayerControllerProps {
-  playerPosition: "attacker" | "defender" | "default" | "start";
+  isPlayerTurn: boolean;
+  playerIsAttacker: boolean;
+  playerIsDefender: boolean;
 }
 
 export const PlayerController = memo((props: PlayerControllerProps) => {
-  const { playerPosition } = props;
+  const { isPlayerTurn, playerIsAttacker } = props;
+
+  const { passHandler } = useAiGame();
 
   const component = useMemo(() => {
-    if (playerPosition === "default")
+    if (!isPlayerTurn)
       return (
         <Text fz={20} fw={700}>
-          {" "}
           It's not your turn
         </Text>
       );
 
-    if (playerPosition === "start") {
-      return <StyledStartGame>Start game</StyledStartGame>;
-    }
-
     return (
-      <StyledPlayerControllerItem $type={playerPosition}>
-        {playerPosition === "attacker" ? "Pass" : "I take"}
+      <StyledPlayerControllerItem
+        onClick={playerIsAttacker ? passHandler : console.log}
+        $type={playerIsAttacker ? "attacker" : "defender"}
+      >
+        {playerIsAttacker ? "Pass" : "I take"}
       </StyledPlayerControllerItem>
     );
-  }, [playerPosition]);
+  }, [isPlayerTurn, passHandler, playerIsAttacker]);
 
   return (
-    <StyledPlayerController $isStart={playerPosition === "start"}>
+    <StyledPlayerController $isStart={false}>
       {component}
     </StyledPlayerController>
   );

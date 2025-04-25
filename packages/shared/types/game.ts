@@ -14,7 +14,8 @@ type BaseGame = {
   trump: CardSuits;
   attackingPlayerId: string;
   defendingPlayerId: string;
-  isTurnAttacker: boolean;
+  turnPlayerId: string;
+  defenderSurrendered: boolean;
   turnMaxTime: Date | null;
   playersCount: GamePlayersCount;
   status: GameStatus;
@@ -30,3 +31,4 @@ type LobbyProps = {
 };
 
 export type Game = BaseGame & (PrivateProps | LobbyProps);
+export type GameTurnAction = "pass" | "take" | "move" | "beaten";
