@@ -122,41 +122,58 @@ const generateInitialGameRoom = (
   if (currentPlayers.length === needsPlayersCount) {
     const { attacker, defender, deck, players, trump } =
       generateGameStateOnStart(currentPlayers);
-    const game: Game = {
-      id: roomId,
-      withOpenAI: true,
-      attackingPlayerId: attacker.user._id,
-      defendingPlayerId: defender.user._id,
-      deck,
-      players,
-      defenderSurrendered: false,
-      playersCount: players.length as 2,
-      status: "active",
-      trump,
-      turnMaxTime: generateTurnTime(),
-      turnPlayerId: attacker.user._id,
-      table: [],
-      code: isPrivate ? "" : roomId,
-      isPrivate,
+    return {
+      meta: {
+        id: roomId,
+        code: isPrivate ? "" : roomId,
+        isPrivate,
+        playersCount: players.length as 2,
+        withOpenAI: true,
+        status: "active",
+      },
+      players: {
+        list: players,
+        turnPlayerId: attacker.user._id,
+        attackingPlayerId: attacker.user._id,
+        defendingPlayerId: defender.user._id,
+      },
+      table: {
+        deck,
+        cards: [],
+        trump,
+      },
+      turn: {
+        defenderSurrendered: false,
+        roundActions: [],
+        turnMaxTime: generateTurnTime(),
+      },
     };
-    return game;
   } else {
     return {
-      code: isPrivate ? "" : roomId,
-      isPrivate,
-      table: [],
-      deck: ALL_CARDS.map(({ id }) => id),
-      id: roomId,
-      defenderSurrendered: false,
-      defendingPlayerId: "",
-      attackingPlayerId: "",
-      players: currentPlayers,
-      playersCount: needsPlayersCount as 2,
-      status: "starting",
-      trump: CardSuits.CLUBS,
-      turnMaxTime: new Date(),
-      turnPlayerId: "",
-      withOpenAI: false,
+      meta: {
+        id: roomId,
+        code: isPrivate ? "" : roomId,
+        isPrivate,
+        playersCount: needsPlayersCount as 2,
+        withOpenAI: false,
+        status: "starting",
+      },
+      players: {
+        list: currentPlayers,
+        turnPlayerId: "",
+        attackingPlayerId: "",
+        defendingPlayerId: "",
+      },
+      table: {
+        deck: ALL_CARDS.map(({ id }) => id),
+        cards: [],
+        trump: CardSuits.CLUBS,
+      },
+      turn: {
+        roundActions: [],
+        defenderSurrendered: false,
+        turnMaxTime: generateTurnTime(),
+      },
     };
   }
 };

@@ -77,9 +77,7 @@ export const aiTurn = async (req: Request, res: Response): Promise<void> => {
       updatedGameRes = updatedGame;
     }
 
-    res
-      .status(201)
-      .json({ action: aiAction as GameTurnAction, game: updatedGameRes });
+    res.status(201).json({ action: {}, game: updatedGameRes });
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(409).json({ message: err.message });
@@ -102,8 +100,8 @@ export const beatCard = async (req: Request, res: Response): Promise<void> => {
 
     const { attackingCardId, defendingCardId, trump } = req.body;
 
-    if (gameRes?.turnPlayerId !== guestId)
-      throw new Error(MESSAGES.GAME.NOT_YOUR_TURN);
+    // if (gameRes?.turnPlayerId !== guestId)
+    // throw new Error(MESSAGES.GAME.NOT_YOUR_TURN);
     let newGame = gameRes;
 
     if (gameRes) {
@@ -134,27 +132,27 @@ export const attackCard = async (
   res: Response
 ): Promise<void> => {
   try {
-    const guestId = req.headers["guestid"];
-    if (!guestId || typeof guestId !== "string") {
-      res
-        .status(400)
-        .json({ message: MESSAGES.CREATING_AI_GAME.GUEST_ID_ERROR });
-      return;
-    }
-    const gameRes = await gameService.getAIGameRoom(guestId);
+    // const guestId = req.headers["guestid"];
+    // if (!guestId || typeof guestId !== "string") {
+    //   res
+    //     .status(400)
+    //     .json({ message: MESSAGES.CREATING_AI_GAME.GUEST_ID_ERROR });
+    //   return;
+    // }
+    // const gameRes = await gameService.getAIGameRoom(guestId);
 
-    const { attackingCardId } = req.body;
+    // const { attackingCardId } = req.body;
 
-    if (gameRes?.turnPlayerId !== guestId)
-      throw new Error(MESSAGES.GAME.NOT_YOUR_TURN);
-    let newGame = gameRes;
+    // if (gameRes?.turnPlayerId !== guestId)
+    //   throw new Error(MESSAGES.GAME.NOT_YOUR_TURN);
+    // let newGame = gameRes;
 
-    if (gameRes) {
-      await gameService.attackCard(attackingCardId, guestId, gameRes);
-      const updatedGame = await gameService.getAIGameRoom(guestId);
-      if (updatedGame) newGame = updatedGame;
-    }
-    res.status(201).json({ action: "move" as GameTurnAction, game: newGame });
+    // if (gameRes) {
+    //   await gameService.attackCard(attackingCardId, guestId, gameRes);
+    //   const updatedGame = await gameService.getAIGameRoom(guestId);
+    //   if (updatedGame) newGame = updatedGame;
+    // }
+    res.status(201).json({ action: "move" as GameTurnAction, game: {} });
   } catch (err: unknown) {
     if (err instanceof Error) {
       res.status(409).json({ message: err.message });

@@ -112,10 +112,10 @@ export const getNewAttackerAndDefenderPlayerOnFinishGame = (
   action: "beaten" | "take"
 ) => {
   const players = game.players;
-  const defenderIndex = players.findIndex(
-    ({ user }) => user._id === game.defendingPlayerId
-  );
-
+  // const defenderIndex = players.findIndex(
+  //   ({ user }) => user._id === game.defendingPlayerId
+  // );
+  const defenderIndex = Math.random();
   if (defenderIndex === -1) {
     throw new Error(MESSAGES.GENERAL.UNKNOWN_ERROR);
   }
@@ -123,19 +123,22 @@ export const getNewAttackerAndDefenderPlayerOnFinishGame = (
   let newAttackerIndex: number;
   let newDefenderIndex: number;
 
-  if (action === "beaten") {
-    newAttackerIndex = defenderIndex;
-    newDefenderIndex = (newAttackerIndex + 1) % players.length;
-  } else {
-    // take
-    newAttackerIndex = (defenderIndex + 1) % players.length;
-    newDefenderIndex = (newAttackerIndex + 1) % players.length;
-  }
-
+  // if (action === "beaten") {
+  //   newAttackerIndex = defenderIndex;
+  //   newDefenderIndex = (newAttackerIndex + 1) % players.length;
+  // } else {
+  //   // take
+  //   newAttackerIndex = (defenderIndex + 1) % players.length;
+  //   newDefenderIndex = (newAttackerIndex + 1) % players.length;
+  // }
   return {
-    newAttackingPlayerId: players[newAttackerIndex].user._id,
-    newDefendingPlayerId: players[newDefenderIndex].user._id,
+    newAttackingPlayerId: "",
+    newDefendingPlayerId: "",
   };
+  // return {
+  //   newAttackingPlayerId: players[newAttackerIndex].user._id,
+  //   newDefendingPlayerId: players[newDefenderIndex].user._id,
+  // };
 };
 
 export const convertSuitToSymbol = (suit: string): string => {

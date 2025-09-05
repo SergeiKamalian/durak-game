@@ -25,7 +25,7 @@ export const gameChecker = async (
 
   const auth = (req as IdentifiedRequest).auth;
   const playerId = auth.isAuth ? auth.userId : auth.guestId;
-  const hasAccessToGame = !!foundGame.players.some(
+  const hasAccessToGame = !!foundGame.players.list.some(
     ({ user }) => user._id === playerId
   );
 

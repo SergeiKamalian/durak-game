@@ -13,8 +13,8 @@ export const getGameForClient = async (
   const redisColumnName = `${REDIS_COLUMN_NAMES.GAME}:${id}`;
   const gameJson = await AppRedis.get(redisColumnName);
   const game = JSON.parse(gameJson!) as Game;
-  const { players, deck, ...gameRest } = game;
-  const returnPlayers: PlayerReturnType[] = players
+  const { players, table, ...gameRest } = game;
+  const returnPlayers: PlayerReturnType[] = players.list
     .filter(({ user }) => user._id !== currentPlayerId)
     .map((player) => {
       const { cardIds, ...restPlayer } = player;
@@ -23,14 +23,23 @@ export const getGameForClient = async (
         cardsCount: cardIds.length,
       };
     });
-  const currentPlayer = players.find(
+  const currentPlayer = players.list.find(
     ({ user }) => user._id === currentPlayerId
   )!;
   return {
     ...gameRest,
-    deckCardsCount: deck.length,
-    players: returnPlayers,
-    currentPlayer,
+    players: {
+      ...players,
+      list: returnPlayers,
+      currentPlayer: currentPlayer,
+    },
+    table: {
+      deck: {
+        cardsCount: table.deck.length,
+      },
+      cards: table.cards,
+      trump: table.trump,
+    },
   };
 };
 

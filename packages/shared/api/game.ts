@@ -8,6 +8,20 @@ export type CreateGameRoomResponse = {
   game: GameReturnType;
 };
 
+// Get
+export type GetGameRoomRequest = {
+  id: string;
+};
+
+// Leave
+export type LeftGameRoomRequest = GetGameRoomRequest;
+
+// Actions
+export type PlayerActionRequest = {
+  id: string;
+  action: "take" | "pass";
+};
+
 // Turns
 export type PlayerAttackTurnRequest = {
   id: string;

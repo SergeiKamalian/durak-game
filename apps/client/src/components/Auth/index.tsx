@@ -21,6 +21,12 @@ export const Auth = memo(() => {
       id: getGuestId() || "",
     });
   };
+  const getGame = async () => {
+    const res = await GameService.getGameRoom({
+      id: getGuestId() || "",
+    });
+    console.log(res);
+  };
   const defense = async () => {
     const res = await GameService.playerDefenseTurn({
       turn: "defense",
@@ -29,10 +35,24 @@ export const Auth = memo(() => {
       id: getGuestId() || "",
     });
   };
+  const playerAction = async () => {
+    const res = await GameService.playerAction({
+      action: "pass",
+      id: getGuestId() || "",
+    });
+  };
+  const leftGame = async () => {
+    const res = await GameService.leaveGame({
+      id: getGuestId() || "",
+    });
+  };
   return (
     <StyledAuth>
       <button onClick={attack}>attack</button>
       <button onClick={defense}>defense</button>
+      <button onClick={getGame}>get</button>
+      <button onClick={leftGame}>left</button>
+      <button onClick={playerAction}>playerAction</button>
       <Wrapper
         withAnimation
         background={"#12141ec2"}

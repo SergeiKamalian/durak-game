@@ -21,11 +21,15 @@ export const playerAttack = async (
   const { id, cardId } = data;
   const playerId = auth.isAuth ? auth.userId : auth.guestId;
   const foundGame = await getGameForServer(id);
-  const canAttack = tryAttackCard(cardId, foundGame.table);
+  const canAttack = tryAttackCard(cardId, foundGame.table.cards);
   if (!canAttack) throw new Error(MESSAGES.GAME.CHEATING);
-  const table = [...foundGame.table, [cardId]] as TableCards;
-  const players = filterPlayersOnTurn(foundGame.players, playerId, cardId);
-  const game: Game = { ...foundGame, table, players };
+  const table = [...foundGame.table.cards, [cardId]] as TableCards;
+  const players = filterPlayersOnTurn(foundGame.players.list, playerId, cardId);
+  const game: Game = {
+    ...foundGame,
+    table: { ...foundGame.table, cards: table },
+    players: { ...foundGame.players, list: players },
+  };
   return await setGame(id, game, playerId);
 };
 
@@ -36,24 +40,32 @@ export const playerDefense = async (
   const { id, inTableCardId, playerCardId } = data;
   const playerId = auth.isAuth ? auth.userId : auth.guestId;
   const foundGame = await getGameForServer(id);
-  const canClose = tryCloseCard(inTableCardId, playerCardId, foundGame.trump);
+  const canClose = tryCloseCard(
+    inTableCardId,
+    playerCardId,
+    foundGame.table.trump
+  );
   if (!canClose) throw new Error(MESSAGES.GAME.CHEATING);
 
-  const inTableCardIsValid = foundGame.table.some(
+  const inTableCardIsValid = foundGame.table.cards.some(
     (cards) => cards[0] === inTableCardId
   );
   if (!inTableCardIsValid) throw new Error(MESSAGES.GAME.CHEATING);
 
-  const table = foundGame.table.map((cards) => {
+  const table = foundGame.table.cards.map((cards) => {
     if (cards[0] !== inTableCardId) return cards;
     else return [inTableCardId, playerCardId];
   }) as TableCards;
   const players = filterPlayersOnTurn(
-    foundGame.players,
+    foundGame.players.list,
     playerId,
     playerCardId
   );
-  const game: Game = { ...foundGame, table, players };
+  const game: Game = {
+    ...foundGame,
+    table: { ...foundGame.table, cards: table },
+    players: { ...foundGame.players, list: players },
+  };
   return await setGame(id, game, playerId);
 };
 
